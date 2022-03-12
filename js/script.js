@@ -12,6 +12,7 @@ musicList = wrapper.querySelector(".music-list"),
 moreMusicBtn = wrapper.querySelector("#more-music"),
 closemoreMusic = musicList.querySelector("#close");
 
+
 let volume_slider = document.querySelector(".volume_slider");
 
 let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
@@ -23,11 +24,26 @@ window.addEventListener("load", ()=>{
   
 });
 
+document.querySelector('.uploadBtn').addEventListener('click', (e) => {
+  const profileAud = document.querySelector('input.profile-aud').files[0];
+  const profileAudURL = URL.createObjectURL(profileAud);
+      e.preventDefault();
+      allMusic.push({name: " ", artist:" " ,src: profileAudURL})
+      document.querySelector(".uploadform").style.display="none";
+      loadMusic(allMusic.length);
+      playMusic()
+      playingSong();
+  });
+document.querySelector(".uploadMusic").addEventListener('click',()=>{
+  document.querySelector(".uploadform").style.display="block";
+})
+
 function loadMusic(indexNumb){
+  console.log(allMusic);
   musicName.innerText = allMusic[indexNumb - 1].name;
   musicArtist.innerText = allMusic[indexNumb - 1].artist;
-  musicImg.src = `images/${allMusic[indexNumb - 1].src}.jpg`;
-  mainAudio.src = `songs/${allMusic[indexNumb - 1].src}.mp3`;
+  musicImg.src = `images/${allMusic[indexNumb - 1].img}.jpg`;
+  mainAudio.src = allMusic[indexNumb - 1].src;
 }
 
 //play music function
@@ -46,6 +62,7 @@ function pauseMusic(){
 
 //prev music function
 function prevMusic(){
+  console.log(allMusic);
   musicIndex--; //decrement of musicIndex by 1
   //if musicIndex is less than 1 then musicIndex will be the array length so the last music play
   musicIndex < 1 ? musicIndex = allMusic.length : musicIndex = musicIndex;
@@ -56,6 +73,7 @@ function prevMusic(){
 
 //next music function
 function nextMusic(){
+  console.log(allMusic);
   musicIndex++; //increment of musicIndex by 1
   //if musicIndex is greater than array length then musicIndex will be 1 so the first music play
   musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex;
@@ -185,13 +203,13 @@ for (let i = 0; i < allMusic.length; i++) {
                   <span>${allMusic[i].name}</span>
                   <p>${allMusic[i].artist}</p>
                 </div>
-                <span id="${allMusic[i].src}" class="audio-duration">3:40</span>
-                <audio class="${allMusic[i].src}" src="songs/${allMusic[i].src}.mp3"></audio>
+                <span id="${allMusic[i].img}" class="audio-duration">3:40</span>
+                <audio class="${allMusic[i].img}" src="${allMusic[i].src}"></audio>
               </li>`;
   ulTag.insertAdjacentHTML("beforeend", liTag); //inserting the li inside ul tag
 
-  let liAudioDuartionTag = ulTag.querySelector(`#${allMusic[i].src}`);
-  let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
+  let liAudioDuartionTag = ulTag.querySelector(`#${allMusic[i].img}`);
+  let liAudioTag = ulTag.querySelector(`.${allMusic[i].img}`);
   liAudioTag.addEventListener("loadeddata", ()=>{
     let duration = liAudioTag.duration;
     let totalMin = Math.floor(duration / 60);

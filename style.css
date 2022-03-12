@@ -299,3 +299,10 @@ i#volume_up {
   margin-right: 3px;
   margin-top: 12px;
 }
+
+.uploadform{
+  background-color:white;
+  position: absolute;
+  left:100px;
+  display:none;
+}
