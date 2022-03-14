@@ -28,7 +28,7 @@ document.querySelector('.uploadBtn').addEventListener('click', (e) => {
   const profileAud = document.querySelector('input.profile-aud').files[0];
   const profileAudURL = URL.createObjectURL(profileAud);
       e.preventDefault();
-      allMusic.push({name: " ", artist:" " ,src: profileAudURL})
+      allMusic.push({name: "Unknown Music", artist:"Unknown Artist" ,img:"music-7",src: profileAudURL})
       document.querySelector(".uploadform").style.display="none";
       loadMusic(allMusic.length);
       playMusic()
